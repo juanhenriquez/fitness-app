@@ -5,6 +5,9 @@ import { RouterModule } from '@angular/router';
 // third-party modules
 import { AngularFireDatabaseModule} from 'angularfire2/database';
 
+// components
+import { ListItemComponent } from './components/list-item/list-item.component';
+
 // services
 import { MealsService } from './services/meals/meals.service';
 
@@ -13,6 +16,12 @@ import { MealsService } from './services/meals/meals.service';
     CommonModule,
     RouterModule,
     AngularFireDatabaseModule
+  ],
+  declarations: [
+    ListItemComponent
+  ],
+  exports: [
+    ListItemComponent
   ]
 })
 export class SharedModule {
