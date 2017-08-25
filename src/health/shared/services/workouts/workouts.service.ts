@@ -13,19 +13,21 @@ import { Store } from 'store';
 // services
 import { AuthService } from './../../../../auth/shared/services/auth/auth.service';
 
-export interface Meal {
+export interface Workout {
   name: string,
-  ingredients: string[],
+  type: string,
+  strength: any,
+  endurance: any,
   timestamp: number,
   $key: string,
   $exist: () => boolean
 }
 
 @Injectable()
-export class MealsService {
+export class WorkoutsService {
 
-  meals$: Observable<Meal[]> = this.db.list(`meals/${this.uid}`)
-    .do(next => this.store.set('meals', next));
+  workouts$: Observable<Workout[]> = this.db.list(`workouts/${this.uid}`)
+    .do(next => this.store.set('workouts', next));
 
   constructor(
     private db: AngularFireDatabase,
@@ -37,28 +39,28 @@ export class MealsService {
     return this.authService.user.uid;
   }
 
-  getMeal(key: string) {
+  getWorkout(key: string) {
     if(!key) return Observable.of({});
-    return this.store.select<Meal[]>('meals')
+    return this.store.select<Workout[]>('workouts')
       .filter(Boolean)
-      .map(meals => meals.find((meal: Meal) => meal.$key === key));
+      .map(workouts => workouts.find((workout: Workout) => workout.$key === key));
   }
 
-  addMeal(meal: Meal) {
+  addWorkout(workout: Workout) {
     return this.db
-      .list(`meals/${this.uid}`)
-      .push(meal);
+      .list(`workouts/${this.uid}`)
+      .push(workout);
   }
 
-  updateMeal(key: string, meal: Meal) {
+  updateWorkout(key: string, workout: Workout) {
     return this.db
-      .object(`meals/${this.uid}/${key}`)
-      .update(meal);
+      .object(`workouts/${this.uid}/${key}`)
+      .update(workout);
   }
 
-  removeMeal(key: string) {
+  removeWorkout(key: string) {
     return this.db
-      .list(`meals/${this.uid}`)
+      .list(`workouts/${this.uid}`)
       .remove(key);
   }
 

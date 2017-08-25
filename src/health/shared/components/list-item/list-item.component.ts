@@ -47,7 +47,7 @@ export class ListItemComponent {
   toggled: boolean;
 
   getRoute(item: any) {
-    return [`/meals/`,item.$key];
+    return [`/meals/`, item.$key];
   }
 
   toggle() {
